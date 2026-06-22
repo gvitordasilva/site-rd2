@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RD2 ENGENHARIA — Obras Comerciais &amp; Fit-out de Academias | RJ</title>
+  <meta name="description" content="RD2 Engenharia — especialista em obras comerciais e no fit-out de academias e franquias no Rio de Janeiro. Da prancheta à inauguração, entregues sob a marca do cliente." />
+
+  <!-- favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+
+  <!-- open graph / compartilhamento (whatsapp, instagram, linkedin) -->
+  <!-- TODO: ao publicar, troque og:url e og:image por URLs absolutas (https://seudominio/...) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:site_name" content="RD2 Engenharia" />
+  <meta property="og:title" content="RD2 ENGENHARIA — Obras Comerciais & Fit-out de Academias | RJ" />
+  <meta property="og:description" content="Especialista em obras comerciais e fit-out de academias e franquias no Rio de Janeiro. Da prancheta à inauguração." />
+  <meta property="og:image" content="assets/obras/estaleiro-fachada.jpeg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="RD2 ENGENHARIA — Obras Comerciais & Fit-out de Academias | RJ" />
+  <meta name="twitter:description" content="Especialista em obras comerciais e fit-out de academias e franquias no Rio de Janeiro." />
+  <meta name="twitter:image" content="assets/obras/estaleiro-fachada.jpeg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script type="importmap">
+    { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js" } }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollToPlugin.min.js"></script>
+</head>
+<body>
+
+  <!-- preloader -->
+  <div class="preloader" id="preloader">
+    <div class="preloader__meta">
+      <span>rd2 engenharia</span>
+      <span>obras comerciais &amp; fit-out de academias</span>
+    </div>
+    <div class="preloader__count" id="preloaderCount">0</div>
+    <div class="preloader__bar"><span id="preloaderBar"></span></div>
+  </div>
+
+  <!-- webgl -->
+  <div class="gl" id="gl"></div>
+
+  <!-- header -->
+  <header class="header">
+    <div class="header__brand">
+      <a class="logo" href="#" data-cursor>
+        <span class="logo__mark">RD2</span>
+      </a>
+      <a class="cta-header" href="#contato" data-scroll data-cursor aria-label="Solicite um orçamento">
+        <span>orçamento</span>
+        <span class="cta-header__arrow">→</span>
+      </a>
+    </div>
+
+    <nav class="view-nav" id="viewNav">
+      <button class="view-nav__btn is-active" data-view="spiral" data-cursor>espiral</button>
+      <span class="view-nav__dot"></span>
+      <button class="view-nav__btn" data-view="list" data-cursor>linha</button>
+    </nav>
+
+    <div class="header__actions">
+      <button class="mode-btn" id="modeBtn" data-cursor aria-label="alternar modo projeto">
+        <span class="mode-btn__icon">∠</span>
+        <span class="mode-btn__label">projeto</span>
+      </button>
+      <button class="menu-btn" id="menuBtn" data-cursor>
+        <span class="menu-btn__label">menu</span>
+        <span class="menu-btn__dot"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- hero -->
+  <div class="hero" id="hero">
+    <p class="hero__eyebrow" id="heroEyebrow">engenharia &amp; obras comerciais — academias e franquias</p>
+    <h1 class="hero__title" id="heroTitle">RD2 ENGENHARIA</h1>
+  </div>
+
+  <!-- rotating badge -->
+  <div class="badge" id="badge">
+    <svg viewBox="0 0 120 120">
+      <defs>
+        <path id="badgeCircle" d="M 60,60 m -44,0 a 44,44 0 1,1 88,0 a 44,44 0 1,1 -88,0" />
+      </defs>
+      <text>
+        <textPath href="#badgeCircle">portfólio 2026 — academias · franquias · obras comerciais —&#160;</textPath>
+      </text>
+    </svg>
+    <span class="badge__center">●</span>
+  </div>
+
+  <!-- current work label -->
+  <div class="work-label" id="workLabel">
+    <span class="work-label__index" id="workIndex">01</span>
+    <span class="work-label__line"></span>
+    <span class="work-label__title" id="workTitle">panobianco pilares</span>
+  </div>
+
+  <!-- ficha técnica (modo projeto) -->
+  <div class="spec" id="spec" aria-hidden="true">
+    <p class="spec__title" id="specSheet">folha 01 / 12</p>
+    <p class="spec__name" id="specName">—</p>
+    <p class="spec__dim" id="specArea">área — —</p>
+    <p class="spec__dim" id="specTipo">tipo — —</p>
+    <p class="spec__dim" id="specStatus">status — —</p>
+  </div>
+
+  <!-- scroll hint -->
+  <div class="scroll-hint" id="scrollHint"><span>( role para explorar )</span></div>
+
+  <!-- ======================= page content ======================= -->
+  <main class="page">
+    <div class="page__spacer" id="heroSpacer"></div>
+
+    <!-- sobre -->
+    <section class="section section--sobre" id="sobre">
+      <p class="section__label">( 01 — sobre )</p>
+      <h2 class="sobre__title reveal-lines">
+        Da <em>prancheta</em> à <em>inauguração</em> — obras comerciais que performam.
+      </h2>
+      <div class="sobre__body">
+        <p class="reveal">
+          A RD2 Engenharia é especializada em obras comerciais e no fit-out de
+          academias e franquias. Da estrutura ao acabamento, entregamos espaços
+          prontos para operar — com rigor técnico, prazo cumprido e custo sob
+          controle, sob a marca do cliente.
+        </p>
+        <p class="reveal">
+          Atuamos no Rio de Janeiro conduzindo cada etapa com a nossa própria
+          equipe de engenheiros: planejamento executivo detalhado, gestão
+          transparente e tecnologia aplicada ao canteiro. Da prancheta à
+          inauguração, sem surpresas.
+        </p>
+        <a class="sobre__cta reveal" href="#contato" data-scroll data-cursor>
+          <span>fale com a nossa equipe</span>
+          <span class="sobre__cta-arrow">→</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- serviços -->
+    <section class="section section--servicos" id="servicos">
+      <p class="section__label">( 02 — serviços )</p>
+      <ul class="servicos__list">
+        <li class="servico reveal" data-cursor>
+          <em>01</em>
+          <h3>Fit-out de academias</h3>
+          <p>entrega turnkey de unidades prontas para operar, sob a marca do cliente</p>
+        </li>
+        <li class="servico reveal" data-cursor>
+          <em>02</em>
+          <h3>Obras comerciais</h3>
+          <p>lojas, franquias e espaços corporativos do projeto à inauguração</p>
+        </li>
+        <li class="servico reveal" data-cursor>
+          <em>03</em>
+          <h3>Retrofit &amp; reformas</h3>
+          <p>modernização de pontos comerciais e edifícios com engenharia de precisão</p>
+        </li>
+        <li class="servico reveal" data-cursor>
+          <em>04</em>
+          <h3>Gerenciamento de obras</h3>
+          <p>planejamento, fiscalização e controle de custos com prazo garantido</p>
+        </li>
+        <li class="servico reveal" data-cursor>
+          <em>05</em>
+          <h3>Projetos &amp; consultoria</h3>
+          <p>estrutural, fundações, compatibilização e laudos técnicos</p>
+        </li>
+      </ul>
+    </section>
+
+    <!-- obras em destaque -->
+    <section class="section section--obras" id="obras">
+      <p class="section__label">( 03 — obras em destaque )</p>
+      <p class="obras__note reveal">Unidades <strong>Panobianco</strong> entregues pela RD2 — da prancheta à inauguração.</p>
+      <div class="obras__grid">
+        <figure class="obra reveal" data-cursor
+                data-name="Panobianco Pilares" data-local="Pilares — Rio de Janeiro, RJ"
+                data-area="a confirmar" data-ano="entregue · 2026" data-escopo="Fit-out completo da unidade"
+                data-img="assets/obras/pilares-interior.jpeg">
+          <div class="obra__img-wrap">
+            <img src="assets/obras/pilares-interior.jpeg" alt="Interior da academia Panobianco Pilares" loading="lazy" />
+          </div>
+          <figcaption>
+            <em>01</em>
+            <strong>Panobianco Pilares</strong>
+            <span>comercial — a confirmar m² — 2026</span>
+          </figcaption>
+        </figure>
+        <figure class="obra reveal" data-cursor
+                data-name="Panobianco Taquara" data-local="Estr. dos Bandeirantes — Taquara, RJ"
+                data-area="a confirmar" data-ano="entregue · 2026" data-escopo="Fit-out completo da unidade"
+                data-img="assets/obras/taquara-interior.jpeg">
+          <div class="obra__img-wrap">
+            <img src="assets/obras/taquara-interior.jpeg" alt="Interior da academia Panobianco Taquara" loading="lazy" />
+          </div>
+          <figcaption>
+            <em>02</em>
+            <strong>Panobianco Taquara</strong>
+            <span>comercial — a confirmar m² — 2026</span>
+          </figcaption>
+        </figure>
+        <figure class="obra reveal" data-cursor
+                data-name="Panobianco Campos dos Goytacazes" data-local="Saara Plaza Shopping — Campos dos Goytacazes, RJ"
+                data-area="1.350 m²" data-ano="entregue · 2025" data-escopo="Fit-out completo da unidade"
+                data-img="assets/obras/campos-interior.jpeg">
+          <div class="obra__img-wrap">
+            <img src="assets/obras/campos-interior.jpeg" alt="Interior da academia Panobianco Campos dos Goytacazes" loading="lazy" />
+          </div>
+          <figcaption>
+            <em>03</em>
+            <strong>Panobianco Campos dos Goytacazes</strong>
+            <span>comercial — 1.350 m² — 2025</span>
+          </figcaption>
+        </figure>
+        <figure class="obra reveal" data-cursor
+                data-name="Panobianco Rio das Ostras" data-local="Cidade Beira Mar — Rio das Ostras, RJ"
+                data-area="a confirmar" data-ano="entregue · 2026" data-escopo="Fit-out completo da unidade"
+                data-img="assets/obras/estaleiro-interior.jpeg">
+          <div class="obra__img-wrap">
+            <img src="assets/obras/estaleiro-interior.jpeg" alt="Interior da academia Panobianco Rio das Ostras" loading="lazy" />
+          </div>
+          <figcaption>
+            <em>04</em>
+            <strong>Panobianco Rio das Ostras</strong>
+            <span>comercial — a confirmar m² — 2026</span>
+          </figcaption>
+        </figure>
+        <figure class="obra reveal" data-cursor
+                data-name="Panobianco Tijuca" data-local="Rua São Francisco Xavier — Tijuca, RJ"
+                data-area="a confirmar" data-ano="entregue · 2026" data-escopo="Fit-out completo da unidade"
+                data-img="assets/obras/tijuca-interior.jpeg">
+          <div class="obra__img-wrap">
+            <img src="assets/obras/tijuca-interior.jpeg" alt="Interior da academia Panobianco Tijuca" loading="lazy" />
+          </div>
+          <figcaption>
+            <em>05</em>
+            <strong>Panobianco Tijuca</strong>
+            <span>comercial — a confirmar m² — 2026</span>
+          </figcaption>
+        </figure>
+        <figure class="obra reveal" data-cursor>
+          <div class="obra__img-wrap">
+            <img src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=900&h=1100&fit=crop&q=80&auto=format" alt="Retrofit do Edifício Central"
+                 onerror="this.onerror=null;this.src='https://picsum.photos/seed/rd2-obra6/900/1100'" loading="lazy" />
+          </div>
+          <figcaption>
+            <em>06</em>
+            <strong>Retrofit Edifício Central</strong>
+            <span>retrofit — 9.600 m² — 2024</span>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- antes & depois -->
+    <section class="section section--ad" id="transformacao">
+      <p class="section__label">( 04 — antes &amp; depois )</p>
+      <h2 class="ad__heading reveal-lines">Da obra à <em>inauguração</em>.</h2>
+      <p class="ad__sub reveal">Arraste para comparar — a transformação de cada espaço, do canteiro ao dia da abertura.</p>
+
+      <figure class="ad reveal" id="adCompare" style="--pos:50%">
+        <!-- DEPOIS (camada base) -->
+        <div class="ad__media ad__media--depois">
+          <img src="assets/obras/antes-depois/sim-depois.jpeg" alt="Depois — academia finalizada" loading="lazy" />
+        </div>
+        <!-- ANTES (camada sobreposta, recortada pelo handle) -->
+        <div class="ad__media ad__media--antes">
+          <img src="assets/obras/antes-depois/sim-antes.jpeg" alt="Antes — obra em estrutura" loading="lazy" />
+        </div>
+
+        <span class="ad__tag ad__tag--antes">antes</span>
+        <span class="ad__tag ad__tag--depois">depois</span>
+
+        <button class="ad__handle" id="adHandle" type="button" data-cursor
+                aria-label="Arraste para comparar antes e depois">
+          <span class="ad__handle-grip">⇆</span>
+        </button>
+      </figure>
+    </section>
+
+    <!-- números -->
+    <section class="section section--stats" id="numeros">
+      <p class="section__label">( 05 — números )</p>
+      <div class="stats__grid">
+        <!-- real: temos 5 unidades Panobianco no portfólio -->
+        <div class="stat reveal">
+          <span class="stat__value"><span class="stat__num" data-count="5">0</span>+</span>
+          <span class="stat__caption">unidades entregues</span>
+        </div>
+        <!-- real: Rio (capital), Campos dos Goytacazes e Rio das Ostras -->
+        <div class="stat reveal">
+          <span class="stat__value"><span class="stat__num" data-count="3">0</span></span>
+          <span class="stat__caption">cidades atendidas</span>
+        </div>
+        <!-- TODO: confirmar total de m² com o cliente -->
+        <div class="stat reveal">
+          <span class="stat__value"><span class="stat__num" data-count="12">0</span> mil</span>
+          <span class="stat__caption">m² em obras comerciais</span>
+        </div>
+        <!-- TODO: confirmar % real de entregas no prazo -->
+        <div class="stat reveal">
+          <span class="stat__value"><span class="stat__num" data-count="100">0</span>%</span>
+          <span class="stat__caption">entregas no prazo</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- contato -->
+    <section class="section section--contato" id="contato">
+      <p class="section__label">( 06 — contato )</p>
+      <p class="contato__lead reveal">Tem um projeto em mente?</p>
+      <a class="contato__mail reveal" href="mailto:contato@rd2engenharia.com.br" data-cursor>
+        contato@rd2engenharia.com.br
+      </a>
+
+      <!-- TODO: troque o action pelo seu endpoint Formspree (https://formspree.io)
+           ou outro serviço. Sem isso, o envio não chega a lugar nenhum. -->
+      <form class="contato__form reveal" id="orcamentoForm"
+            action="https://formspree.io/f/SEU_ID_AQUI" method="POST">
+        <div class="form__row">
+          <label class="form__field">
+            <span>nome</span>
+            <input type="text" name="nome" required autocomplete="name" />
+          </label>
+          <label class="form__field">
+            <span>e-mail ou whatsapp</span>
+            <input type="text" name="contato" required autocomplete="email" />
+          </label>
+        </div>
+        <label class="form__field">
+          <span>sobre a obra</span>
+          <textarea name="mensagem" rows="3" placeholder="tipo de obra, local, prazo…"></textarea>
+        </label>
+        <button class="form__submit" type="submit" data-cursor>
+          <span>enviar pedido de orçamento</span>
+          <span class="form__submit-arrow">→</span>
+        </button>
+        <p class="form__note" id="formNote" hidden>recebido! retornaremos em breve.</p>
+      </form>
+
+      <div class="contato__info reveal">
+        <div>
+          <!-- TODO: telefone/whatsapp reais do cliente -->
+          <p class="contato__label">telefone</p>
+          <p>a confirmar</p>
+          <a href="#" data-cursor>whatsapp em breve</a>
+        </div>
+        <div>
+          <p class="contato__label">atuação</p>
+          <p>Rio de Janeiro — RJ<br />capital e interior</p>
+        </div>
+        <div>
+          <p class="contato__label">redes</p>
+          <a href="#" data-cursor>instagram</a>
+          <a href="#" data-cursor>linkedin</a>
+        </div>
+      </div>
+      <footer class="footer">
+        <span>© 2026 RD2 Engenharia</span>
+        <a href="#" data-scroll-top data-cursor>voltar ao topo ↑</a>
+      </footer>
+    </section>
+  </main>
+
+  <!-- menu overlay -->
+  <div class="menu" id="menu">
+    <div class="menu__panel"></div>
+    <div class="menu__inner">
+      <nav class="menu__links">
+        <a href="#sobre" data-scroll data-cursor><em>01</em><span>sobre</span></a>
+        <a href="#servicos" data-scroll data-cursor><em>02</em><span>serviços</span></a>
+        <a href="#obras" data-scroll data-cursor><em>03</em><span>obras</span></a>
+        <a href="#transformacao" data-scroll data-cursor><em>04</em><span>antes &amp; depois</span></a>
+        <a href="#contato" data-scroll data-cursor><em>05</em><span>contato</span></a>
+      </nav>
+      <div class="menu__footer">
+        <div>
+          <p class="menu__footer-label">orçamentos</p>
+          <a href="mailto:contato@rd2engenharia.com.br" data-cursor>contato@rd2engenharia.com.br</a>
+        </div>
+        <div>
+          <p class="menu__footer-label">redes</p>
+          <a href="#" data-cursor>instagram</a>
+          <a href="#" data-cursor>linkedin</a>
+        </div>
+        <div>
+          <p class="menu__footer-label">atuação</p>
+          <p>rio de janeiro — rj — brasil</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- detalhe da obra -->
+  <div class="obra-modal" id="obraModal" aria-hidden="true">
+    <div class="obra-modal__backdrop" data-obra-close></div>
+    <div class="obra-modal__panel" role="dialog" aria-modal="true" aria-labelledby="omName">
+      <button class="obra-modal__close" data-obra-close aria-label="Fechar" data-cursor>×</button>
+      <div class="obra-modal__media"><img id="omImg" src="" alt="" /></div>
+      <div class="obra-modal__body">
+        <p class="obra-modal__tipo" id="omTipo">comercial</p>
+        <h3 class="obra-modal__name" id="omName">—</h3>
+        <dl class="obra-modal__specs">
+          <div><dt>local</dt><dd id="omLocal">—</dd></div>
+          <div><dt>área</dt><dd id="omArea">—</dd></div>
+          <div><dt>entrega</dt><dd id="omAno">—</dd></div>
+          <div><dt>escopo</dt><dd id="omEscopo">—</dd></div>
+        </dl>
+        <a class="obra-modal__cta" href="#contato" data-scroll data-obra-close data-cursor>
+          quero algo assim <span>→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- grain + cursor -->
+  <div class="grain"></div>
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <script type="module" src="main.js"></script>
+</body>
+</html>

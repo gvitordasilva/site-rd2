@@ -1,0 +1,10 @@
+# backups e geração
+.backup/
+*.pdf
+gerar_proposta*.py
+
+# editor
+.vscode/
+
+# node
+node_modules/

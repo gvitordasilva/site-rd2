@@ -1,0 +1,12 @@
+{
+  "name": "rd2-engenharia",
+  "version": "1.0.0",
+  "description": "RD2 Engenharia — construtora & incorporadora",
+  "type": "module",
+  "scripts": {
+    "dev": "npx http-server -c-1 -o"
+  },
+  "keywords": ["engenharia", "construção"],
+  "author": "RD2 Engenharia",
+  "license": "ISC"
+}
