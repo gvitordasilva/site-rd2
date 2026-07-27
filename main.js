@@ -48,6 +48,9 @@ const TOTAL_W = N * SPACING;
 const HALF_W = TOTAL_W / 2;
 const LINEAR_FACTOR = TOTAL_W / TOTAL;
 
+/* contato — número no formato internacional, só dígitos (55 + DDD + número) */
+const WHATSAPP = '5562991969196';
+
 /* ------------------------------------------------------------------ */
 /*  dom                                                                */
 /* ------------------------------------------------------------------ */
@@ -76,6 +79,7 @@ const specStatus = $('specStatus');
 const specSheet = $('specSheet');
 const cursorEl = $('cursor');
 const cursorRing = $('cursorRing');
+const waFloat = $('waFloat');
 
 /* split hero title into chars */
 (() => {
@@ -271,8 +275,8 @@ let heroChromeReady = false;
 let heroProgress = 0;
 const heroActive = () => heroProgress < 0.5;
 
-const layoutState = { progress: 0 };  // 0 = spiral, 1 = list
-let currentView = 'spiral';
+const layoutState = { progress: 1 };  // 0 = spiral, 1 = list
+let currentView = 'list';
 
 const blueprintState = { value: 0 };  // 0 = foto, 1 = prancheta
 let blueprintOn = false;
@@ -580,6 +584,8 @@ function tick() {
   if (started) {
     glRoot.style.opacity = Math.max(1 - heroProgress * 1.05, 0);
     viewNav.classList.toggle('is-hidden', !heroActive());
+    /* whatsapp entra quando o hero sai de cena (e some com o menu aberto) */
+    waFloat.classList.toggle('is-visible', !heroActive() && !menuOpen);
   }
 
   updateHover();
@@ -778,20 +784,36 @@ function playIntro() {
 })();
 
 /* ------------------------------------------------------------------ */
-/*  formulário: trava enquanto o endpoint não está configurado         */
+/*  formulário -> whatsapp                                             */
+/*  monta a mensagem com os campos e abre o whatsapp já preenchido     */
 /* ------------------------------------------------------------------ */
 
 (() => {
   const form = document.getElementById('orcamentoForm');
   if (!form) return;
+  const note = document.getElementById('formNote');
+
   form.addEventListener('submit', (e) => {
-    if (form.getAttribute('action').includes('SEU_ID_AQUI')) {
-      e.preventDefault();
-      const note = document.getElementById('formNote');
-      if (note) {
-        note.hidden = false;
-        note.textContent = 'configure o endpoint do formulário (action) para ativar o envio.';
-      }
+    e.preventDefault();
+
+    const data = new FormData(form);
+    const val = (k) => (data.get(k) || '').toString().trim();
+
+    const linhas = [
+      'Olá! Vim pelo site da RD2 e gostaria de um orçamento.',
+      '',
+      `Nome: ${val('nome')}`,
+      `Contato: ${val('contato')}`,
+    ];
+    const msg = val('mensagem');
+    if (msg) linhas.push(`Sobre a obra: ${msg}`);
+
+    const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(linhas.join('\n'))}`;
+    window.open(url, '_blank', 'noopener');
+
+    if (note) {
+      note.hidden = false;
+      note.textContent = 'abrimos o whatsapp com seu pedido — é só enviar.';
     }
   });
 })();
