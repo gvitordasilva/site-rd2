@@ -466,6 +466,71 @@ body.blueprint .footer { font-family: var(--font-mono); }
 .sobre__cta-arrow { transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1); }
 .sobre__cta:hover .sobre__cta-arrow { transform: translateX(6px); }
 
+/* ---------- nossa história ---------- */
+.historia__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: 3rem 4.5rem;
+  align-items: start;
+}
+.historia__title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2rem, 4.2vw, 3.4rem);
+  line-height: 1.04;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+.historia__title em {
+  font-style: normal;
+  color: var(--accent);
+  transition: color 0.6s ease;
+}
+.historia__since {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1.3rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+.historia__since::before {
+  content: "";
+  width: 32px;
+  height: 1px;
+  background: var(--accent);
+  flex: none;
+}
+.historia__body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  max-width: 60ch;
+  font-size: 1.02rem;
+  font-weight: 300;
+  line-height: 1.75;
+}
+.historia__body p { color: rgba(236, 231, 223, 0.8); }
+
+/* blueprint: mesmo tratamento de contorno dos demais títulos */
+body.blueprint .historia__title {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--ink);
+  text-stroke: 1px var(--ink);
+}
+body.blueprint .historia__title em {
+  -webkit-text-stroke-color: var(--accent);
+  text-stroke-color: var(--accent);
+}
+
+@media (max-width: 900px) {
+  .historia__grid { grid-template-columns: 1fr; gap: 2.2rem; }
+  .historia__body { max-width: none; }
+}
+
 /* ---------- serviços ---------- */
 .servicos__list { list-style: none; }
 .servico {
