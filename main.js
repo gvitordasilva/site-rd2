@@ -13,8 +13,6 @@ const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 /*  data — obras no carrossel 3D                                       */
 /* ------------------------------------------------------------------ */
 
-const IMG = (id) =>
-  `https://images.unsplash.com/${id}?w=720&h=960&fit=crop&q=80&auto=format`;
 
 const WORKS = [
   { title: 'panobianco pilares — academia',     url: 'assets/obras/pilares-fachada.jpeg',     area: 'a confirmar', tipo: 'comercial',   status: 'entregue · 2026' },
@@ -22,13 +20,7 @@ const WORKS = [
   { title: 'panobianco campos — academia',       url: 'assets/obras/campos-fachada.jpeg',      area: '1.350 m²',    tipo: 'comercial',   status: 'entregue · 2025' },
   { title: 'panobianco rio das ostras — academia', url: 'assets/obras/estaleiro-fachada.jpeg',  area: 'a confirmar', tipo: 'comercial',   status: 'entregue · 2026' },
   { title: 'panobianco tijuca — academia',       url: 'assets/obras/tijuca-interior.jpeg',     area: 'a confirmar', tipo: 'comercial',   status: 'entregue · 2026' },
-  { title: 'retrofit edifício central',         url: IMG('photo-1487958449943-2429e8be8625'), area: '9.600 m²',  tipo: 'retrofit',    status: 'entregue · 2024' },
-  { title: 'residencial lumina',                url: IMG('photo-1479839672679-a46483c0e7c8'), area: '14.200 m²', tipo: 'residencial', status: 'entregue · 2021' },
-  { title: 'condomínio mirante',                url: IMG('photo-1431576901776-e539bd916ba2'), area: '21.300 m²', tipo: 'residencial', status: 'entregue · 2020' },
-  { title: 'galpão logístico vetor',            url: IMG('photo-1503328427499-d92d1ac3d174'), area: '40.500 m²', tipo: 'industrial',  status: 'entregue · 2023' },
-  { title: 'edifício atlas — comercial',        url: IMG('photo-1494522855154-9297ac14b55f'), area: '16.800 m²', tipo: 'comercial',   status: 'em obra · 2026' },
-  { title: 'canteiro — gestão de obras',        url: IMG('photo-1541888946425-d81bb19240f5'), area: '—',         tipo: 'gestão',      status: 'serviço' },
-  { title: 'projetos & engenharia',             url: IMG('photo-1503387762-592deb58ef4e'), area: '—',         tipo: 'consultoria', status: 'serviço' },
+  { title: 'panobianco trindade — academia',     url: 'assets/obras/trindade-fachada.jpeg',    area: 'a confirmar', tipo: 'comercial',   status: 'entregue · 2026' },
 ];
 
 const N = WORKS.length;
